@@ -15,9 +15,9 @@
  *       	▻ Активировать нужные краны (Строки №33, 38, 42);
  *       	▻ Активировать дополнительные функции на используемых проектах (Строки №32 - 45);
  * 		▻ Если Вы собираетесь использовать кран https://freenem.com/, то необходимо установить любое расширение для блокировки рекламы!
- * 		  Советую установить именно Adblock Plus: https://adblockplus.org/en/
+ * 		Советую установить именно Adblock Plus: https://adblockplus.org/en/
  * 
- *	[ Связь со мной ]: 
+ *  [ Связь со мной ]: 
  *  	⑴ Почта: multicaptchabot@ya.ru
  *      ⑵ Сайт: https://multicaptchabot.wixsite.com/multicaptchabot
  *	⑶ ruCaptcha.com: https://rucaptcha.com/software/view/freebitcoin-multicaptcha-bot
@@ -62,11 +62,15 @@ function solveReCaptcha_ruCaptcha(data_sitekey, pageurl, invisble) {
 		var answer = JSON.parse(window.content.document.getElementsByTagName('pre')[0].firstChild.data);
 		if (!answer['status']) {
 			if (answer['request'] === 'ERROR_NO_SLOT_AVAILABLE') {
-				serverURL = 'http://rucaptcha.com/'; // => Меняем сервер на приоритетный, по причине переполненной очереди на discount-сервере...
+                iimDisplay('[ ' + serverURL + ' ]: Error! Trying to solve again...');
+                log(pageurl, 'Ошибка ' + serverURL + ' (' + answer['request'] + '). Меняем сервер на приоритетный и пытаемся ещё раз...');
+                serverURL = 'http://rucaptcha.com/'; // => Меняем сервер на приоритетный, по причине переполненной очереди на discount-сервере...
+                iimPlayCode('SET !TIMEOUT_PAGE 30\nTAB CLOSE')
 				continue;
 			}
 			iimDisplay('[ ' + serverURL + ' ]: Error! Trying to solve again...');
-			log(pageurl, 'Ошибка http://rucaptcha.com/ (' + answer['request'] + '). Пытаемся еще раз решить капчу...');
+			log(pageurl, 'Ошибка ' + serverURL + ' (' + answer['request'] + '). Пытаемся еще раз решить капчу...');
+			iimPlayCode('SET !TIMEOUT_PAGE 30\nTAB CLOSE')
 			return { 'status' : 0, 'taskId' : 0, 'hash' : answer['request'], 'server' : serverURL }; // => { status : 0, taskId : 0, hash : ERROR_CODE, server : SERVER_URL }
 		}
 		var taskId = answer['request'];
@@ -85,16 +89,16 @@ function solveReCaptcha_ruCaptcha(data_sitekey, pageurl, invisble) {
 		} else {
 			if (answer['request'] !== 'CAPCHA_NOT_READY') {
 				iimDisplay('[ ' + serverURL + ' ]: Error! Trying to solve again...');
-				log(pageurl, 'Ошибка http://rucaptcha.com/ (' + answer['request'] + '). Пытаемся еще раз решить капчу...');
+				log(pageurl, 'Ошибка ' + serverURL + ' (' + answer['request'] + '). Пытаемся ещё раз решить капчу...');
 				iimPlayCode('SET !TIMEOUT_PAGE 30\nTAB CLOSE')
 				return { 'status' : 0, 'taskId' : taskId, 'hash' : answer['request'], 'server' : serverURL }; // => { status : 0, taskId : 0, hash : ERROR_CODE, server : SERVER_URL }
 			}
 
 			if (numberOfIterations == 30) {
 				iimDisplay('[ ' + serverURL + ' ]: Response time is expired! Trying again...');
-				log(pageurl, 'Истекло время ответа! Пробуем еще...');
+				log(pageurl, 'Истекло время ответа! Пробуем ещё...');
 				iimPlayCode('SET !TIMEOUT_PAGE 30\nTAB CLOSE')
-				return { 'status' : 0, 'taskId' : taskId, 'hash' : answer['request'], 'server' : serverURL }; // => { status : 0, taskId : 0, hash : ERROR_CODE, server : SERVER_URL }
+				return { 'status' : 0, 'taskId' : taskId, 'hash' : answer['request'], 'server' : serverURL }; // => { status : 0, taskId : 0, hash : 'CAPCHA_NOT_READY', server : SERVER_URL }
 			}
 
 			iimDisplay('Iteration number : ' + numberOfIterations);
@@ -244,6 +248,7 @@ function notificationsBadCaptcha(pageurl) {
  *  @author AlexanderFSP<https://github.com/AlexanderFSP>
  *
  *  @function checkForInattention
+ *  @returns { Boolean } Флаг, указывающий на некорректное заполнение исходных данных
  */
 function checkForInattention() {
     if ((freeBITCOIN === 'OFF') && (freeDOGECOIN === 'OFF') && (freeNEM === 'OFF')) {
@@ -555,7 +560,7 @@ while (true) {
                     timeTillNextRoll('freedoge.co.in', freeDOGECOIN_RandomTimer, timer);
                 }
                 
-                let solvingCaptchaCycles = 1;
+                let solvingCaptchaCycles = 1, answer = null;
                 while (solvingCaptchaCycles <= 5) {
 					do {
 						iimDisplay('Refreshing page...');
@@ -602,8 +607,8 @@ while (true) {
 							+n+ 'WAIT SECONDS=8');
 
 					if (!window.content.document.getElementById('g-recaptcha-response').value.length) {
-						var data_sitekey = window.content.document.getElementsByClassName('g-recaptcha')[0].getAttribute('data-sitekey');
-						var answer = solveReCaptcha_ruCaptcha(data_sitekey, 'freedoge.co.in', 0);
+						let data_sitekey = window.content.document.getElementsByClassName('g-recaptcha')[0].getAttribute('data-sitekey');
+						answer = solveReCaptcha_ruCaptcha(data_sitekey, 'freedoge.co.in', 0);
 						if (!answer['status']) {
 							if (solvingCaptchaCycles == 5) {
 								notificationsBadCaptcha('freedoge.co.in');
@@ -621,7 +626,7 @@ while (true) {
 
 					if (Number(window.content.document.getElementById('winnings').innerHTML) > 0) {
 						iimDisplay('Successfully claimed!');
-						log('freedoge.co.in', 'Успешный сбор! Собрано: ' + Number(window.content.document.getElementById("winnings").innerHTML) + ' DOGE ');
+						log('freedoge.co.in', 'Успешный сбор! Собрано: ' + Number(window.content.document.getElementById('winnings').innerHTML) + ' DOGE ');
 						Winnings_freeDOGECOIN += Number(window.content.document.getElementById('winnings').innerHTML);
 						break;
 					} else {
@@ -673,7 +678,7 @@ while (true) {
 									+n+ 'SET !ENCRYPTION NO'
 									+n+ 'TAG POS=1 TYPE=INPUT:PASSWORD ATTR=NAME:password CONTENT=' + freeNEM_Password
 									+n+ 'TAG POS=1 TYPE=BUTTON ATTR=TXT:LOGIN!'
-									+n+ 'WAIT SECONDS=6');
+									+n+ 'WAIT SECONDS=8');
 							
 							if (!window.content.document.getElementsByClassName('main-button-2 roll-button').length) {
 								let data_sitekey = window.content.document.getElementsByTagName('iframe')[0].src.split('?k=')[1].split('&co=')[0];
@@ -691,7 +696,7 @@ while (true) {
 										+n+ 'SET !TIMEOUT_PAGE 30'
 										+n+ 'SET !TIMEOUT_STEP 10'
 										+n+ 'TAG POS=1 TYPE=TEXTAREA FORM=ID:* ATTR=ID:g-recaptcha-response CONTENT=\"' + answer['hash'] + '\"'
-										+n+ 'WAIT SECONDS=6');
+										+n+ 'WAIT SECONDS=8');
 
 								 if (!window.content.document.getElementsByClassName('main-button-2 roll-button').length) {
 										iimDisplay('Captcha was solved incorrectly. Sending a report and trying to solve captcha again...');
@@ -741,58 +746,54 @@ while (true) {
                                 +n+ 'SET !TIMEOUT_PAGE 60'
                                 +n+ 'SET !TIMEOUT_STEP 10'
                                 +n+ 'TAG POS=1 TYPE=BUTTON ATTR=TXT:ROLL!'
-                                +n+ 'WAIT SECONDS=2');
+                                +n+ 'WAIT SECONDS=8');
 
-						let data_sitekey = window.content.document.getElementsByTagName('iframe')[0].src.split('?k=')[1].split('&co=')[0];
-						let answer = solveReCaptcha_ruCaptcha(data_sitekey, 'freenem.com', 1);
-
-						// - - - Не спрашивайте почему - - - >
 						let winningDuringLastSession = Number(window.content.document.getElementsByClassName('result')[0].innerHTML.split(' ')[3]);
 						if (!isNaN(winningDuringLastSession) || (winningDuringLastSession > 0)) {
 							iimDisplay('Successfully claimed!');
 							log('freenem.com', 'Успешный сбор! Собрано: ' + winningDuringLastSession + ' NEM');
 							Winnings_freeNEM += winningDuringLastSession;
 							break;
-						}
-						// < - - - Так надо ;) - - - 
-
-						if (!answer['status']) {
-							if (solvingCaptchaCycles == 5) {
-								notificationsBadCaptcha('freenem.com');
-								break;
-							}
-							solvingCaptchaCycles++;
-							continue;
-						}
-
-						iimDisplay('Claiming NEM...');
-						log('freenem.com', 'Собираем NEM...');
-
-						iimPlayCode('SET !ERRORIGNORE YES'
-								+n+ 'SET !TIMEOUT_PAGE 30'
-								+n+ 'SET !TIMEOUT_STEP 10'
-								+n+ 'WAIT SECONDS=2.5'
-								+n+ 'TAG POS=1 TYPE=TEXTAREA FORM=ID:* ATTR=ID:g-recaptcha-response CONTENT=\"' + answer['hash'] + '\"'
-								+n+ 'ONDIALOG POS=1 BUTTON=OK CONTENT='
-								+n+ 'WAIT SECONDS=8');
-							
-						winningDuringLastSession = Number(window.content.document.getElementsByClassName('result')[0].innerHTML.split(' ')[3]);
-						if (!isNaN(winningDuringLastSession) || (winningDuringLastSession > 0)) {
-							iimDisplay('Successfully claimed!');
-							log('freenem.com', 'Успешный сбор! Собрано: ' + winningDuringLastSession + ' NEM');
-							Winnings_freeNEM += winningDuringLastSession;
-							break;
 						} else {
-							iimDisplay('Captcha was solved incorrectly. Sending a report and trying to solve captcha again...');
-							log('freenem.com', 'Капча была решена неверно. Отправляем жалобу и пытаемся решить еще раз...');
-							reportCaptcha(answer['server'], answer['taskId']);
-
-							if (solvingCaptchaCycles == 5) {
-								notificationsBadCaptcha('freenem.com');
-								break;
+							let data_sitekey = window.content.document.getElementsByTagName('iframe')[0].src.split('?k=')[1].split('&co=')[0];
+							let answer = solveReCaptcha_ruCaptcha(data_sitekey, 'freenem.com', 1);
+							if (!answer['status']) {
+								if (solvingCaptchaCycles == 5) {
+									notificationsBadCaptcha('freenem.com');
+									break;
+								}
+								solvingCaptchaCycles++;
+								continue;
 							}
-							solvingCaptchaCycles++;
-							continue;
+
+							iimDisplay('Claiming NEM...');
+							log('freenem.com', 'Собираем NEM...');
+							iimPlayCode('SET !ERRORIGNORE YES'
+									+n+ 'SET !TIMEOUT_PAGE 30'
+									+n+ 'SET !TIMEOUT_STEP 10'
+									+n+ 'WAIT SECONDS=2.5'
+									+n+ 'TAG POS=1 TYPE=TEXTAREA FORM=ID:* ATTR=ID:g-recaptcha-response CONTENT=\"' + answer['hash'] + '\"'
+									+n+ 'ONDIALOG POS=1 BUTTON=OK CONTENT='
+									+n+ 'WAIT SECONDS=8');
+								
+							winningDuringLastSession = Number(window.content.document.getElementsByClassName('result')[0].innerHTML.split(' ')[3]);
+							if (!isNaN(winningDuringLastSession) || (winningDuringLastSession > 0)) {
+								iimDisplay('Successfully claimed!');
+								log('freenem.com', 'Успешный сбор! Собрано: ' + winningDuringLastSession + ' NEM');
+								Winnings_freeNEM += winningDuringLastSession;
+								break;
+							} else {
+								iimDisplay('Captcha was solved incorrectly. Sending a report and trying to solve captcha again...');
+								log('freenem.com', 'Капча была решена неверно. Отправляем жалобу и пытаемся решить еще раз...');
+								reportCaptcha(answer['server'], answer['taskId']);
+
+								if (solvingCaptchaCycles == 5) {
+									notificationsBadCaptcha('freenem.com');
+									break;
+								}
+								solvingCaptchaCycles++;
+								continue;
+							}
 						}
 					}
 				}
