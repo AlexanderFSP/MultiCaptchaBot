@@ -1,12 +1,12 @@
 /**
  *  @description freebitco.in / freedoge.co.in / freenem.com [ MultiCaptcha bot]
  *  @since Tue Apr 03 2018 01:07:27 GMT+0300 (MSK)
- *	@version 5.1.0
+ *  @version 5.1.0
  *  @tutorial https://multicaptchabot.wixsite.com/multicaptchabot/instruction
  *  @author AlexanderFSP<https://github.com/AlexanderFSP>
  *
  *  [ Инструкция ]:
- * 		⑴ Настройте браузер перед запуском согласно инструкции на сайте: https://multicaptchabot.wixsite.com/multicaptchabot/instruction;
+ * 	⑴ Настройте браузер перед запуском согласно инструкции на сайте: https://multicaptchabot.wixsite.com/multicaptchabot/instruction;
  *   	⑵ Обязательно авторизируйтесь на всех сайтах, на которых Вы будете использовать бота;
  *   	⑶ Зарегистрируйтесь и пополните счёт на сервисе распознавания капчи: https://rucaptcha.com/pay;
  *   	⑷ Внимание, не забудьте проделать следующие действия:
@@ -14,13 +14,13 @@
  *       	▻ Вставить Ваш API KEY с сервиса ruCaptcha.com(https://rucaptcha.com/enterpage) / 2Captcha.com (Строка №30);
  *       	▻ Активировать нужные краны (Строки №33, 38, 42);
  *       	▻ Активировать дополнительные функции на используемых проектах (Строки №32 - 45);
- * 			▻ Если Вы собираетесь использовать кран https://freenem.com/, то необходимо установить любое расширение для блокировки рекламы!
- * 			  Советую установить именно Adblock Plus: https://adblockplus.org/en/
+ * 		▻ Если Вы собираетесь использовать кран https://freenem.com/, то необходимо установить любое расширение для блокировки рекламы!
+ * 		  Советую установить именно Adblock Plus: https://adblockplus.org/en/
  * 
  *	[ Связь со мной ]: 
  *  	⑴ Почта: multicaptchabot@ya.ru
  *      ⑵ Сайт: https://multicaptchabot.wixsite.com/multicaptchabot
- *		⑶ ruCaptcha.com: https://rucaptcha.com/software/view/freebitcoin-multicaptcha-bot
+ *	⑶ ruCaptcha.com: https://rucaptcha.com/software/view/freebitcoin-multicaptcha-bot
  */
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // [ Блок №1 ]: Пользовательские настройки
@@ -49,7 +49,7 @@ const freeNEM_RandomTimer      = 'OFF';	           // [ON / OFF] - Случай�
  *  @since Tue Apr 03 2018 01:38:33 GMT+0300 (MSK)
  *  @author AlexanderFSP<https://github.com/AlexanderFSP>
  *
- *	@function solveReCaptcha_ruCaptcha
+ *  @function solveReCaptcha_ruCaptcha
  *  @param { String } data_sitekey Ключ сайта
  *  @param { String } pageurl URL страницы, на которой происходит распознавание reCAPTCHA v2
  *  @param { Number } invisble Параметр для запроса, который нужно использовать для решения Invisible reCAPTCHA V2
@@ -110,7 +110,7 @@ function solveReCaptcha_ruCaptcha(data_sitekey, pageurl, invisble) {
  *  @since Tue Apr 03 2018 01:48:14 GMT+0300 (MSK)
  *  @author AlexanderFSP<https://github.com/AlexanderFSP>
  *
- *	@function solveTextCaptcha_ruCaptcha
+ *  @function solveTextCaptcha_ruCaptcha
  *  @param { String } pageurl URL страницы, на которой происходит распознавание текстовой капчи
  *  @param { String } captchaName Название изображения с актуальной текстовой капчей
  *  @param { Number } minLen Минимальное количество символов в ответе
@@ -139,9 +139,8 @@ function solveTextCaptcha_ruCaptcha(pageurl, captchaName, minLen, maxLen, regsen
 	var result = window.content.document.querySelector("body").innerHTML;
 	iimPlayCode('SET !TIMEOUT_PAGE 30\nTAB CLOSE');
 
-	if (result.includes('OK')) {
+	if (result.includes('OK'))
 		return { 'status' : 1, 'taskId' : result.split('|')[1], 'hash' : result.split('|')[2], 'server' : 'http://rucaptcha.com/' };
-	}
 	iimDisplay('[ http://rucaptcha.com/ ] : Error! Trying to solve again...');
 	log(pageurl, 'Ошибка http://rucaptcha.com/ (' + result + '). Пытаемся еще раз решить капчу...');
 	return { 'status' : 0, 'taskId' : 0, 'hash' : result, 'server' : 'http://rucaptcha.com/' }; // => { status : 0, taskId : 0, hash : ERROR_CODE, server : 'http://rucaptcha.com/' }
@@ -152,7 +151,7 @@ function solveTextCaptcha_ruCaptcha(pageurl, captchaName, minLen, maxLen, regsen
  *  @since Tue Apr 03 2018 01:55:26 GMT+0300 (MSK)
  *  @author AlexanderFSP<https://github.com/AlexanderFSP>
  *
- *	@function reportCaptcha
+ *  @function reportCaptcha
  *  @param { String } serverURL URL сервера, на котором происходило распознавание капчи
  *  @param { String } taskId ID неверно решённой капчи
  */
@@ -170,15 +169,14 @@ function reportCaptcha(serverURL, taskId) {
  *  @since Tue Apr 03 2018 01:56:13 GMT+0300 (MSK)
  *  @author AlexanderFSP<https://github.com/AlexanderFSP>
  *
- *	@function timeTillNextRoll
+ *  @function timeTillNextRoll
  *  @param { String } pageurl URL страницы, на которой был обнаружен таймер (для log.txt)
  *  @param { String } pageurl_RandomTimer Опция 'Случайный таймер'
  *  @param { Number } seconds Время в секундах до следующего сбора
  */
 function timeTillNextRoll(pageurl, pageurl_RandomTimer, seconds) {
-	if (pageurl_RandomTimer === 'ON') {
+	if (pageurl_RandomTimer === 'ON')
 		seconds += Math.floor(Math.random () * 90 + 20);
-	}
 	seconds += 10;	// => default waiting
 
 	iimDisplay('Time till next roll: ' + seconds + ' secs.'
@@ -200,16 +198,15 @@ function timeTillNextRoll(pageurl, pageurl_RandomTimer, seconds) {
  *  @since Tue Apr 03 2018 02:01:05 GMT+0300 (MSK)
  *  @author AlexanderFSP<https://github.com/AlexanderFSP>
  *
- *	@function timeTillNextRoll
+ *  @function timeTillNextRoll
  *  @returns { String } Название файла с текстовой капчей
  */
 function makeUniqueName() {
     var text = 'FreeCrypto_';
     var possible = 'abcdefghijklmnopqrstuvwxyz0123456789';
 
-    for(let i = 0; i <= 10; i++) {
+    for(let i = 0; i <= 10; i++)
         text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
     return text + '.jpg';
 }
 
@@ -218,7 +215,7 @@ function makeUniqueName() {
  *  @since Tue Apr 03 2018 02:03:34 GMT+0300 (MSK)
  *  @author AlexanderFSP<https://github.com/AlexanderFSP>
  *
- *	@function log
+ *  @function log
  *  @param { String } pageurl URL актуальной страницы
  *  @param { String } message Новая запись о событии
  */
@@ -233,7 +230,7 @@ function log(pageurl, message) {
  *  @since Tue Apr 03 2018 02:05:28 GMT+0300 (MSK)
  *  @author AlexanderFSP<https://github.com/AlexanderFSP>
  *
- *	@function notificationsBadCaptcha
+ *  @function notificationsBadCaptcha
  *  @param { String } pageurl URL актуальной страницы
  */
 function notificationsBadCaptcha(pageurl) {
@@ -246,7 +243,7 @@ function notificationsBadCaptcha(pageurl) {
  *  @since Tue Apr 03 2018 02:06:46 GMT+0300 (MSK)
  *  @author AlexanderFSP<https://github.com/AlexanderFSP>
  *
- *	@function checkForInattention
+ *  @function checkForInattention
  */
 function checkForInattention() {
     if ((freeBITCOIN === 'OFF') && (freeDOGECOIN === 'OFF') && (freeNEM === 'OFF')) {
@@ -271,7 +268,8 @@ const n = '\n';
 var Winnings_freeBITCOIN = 0, Rewards_freeBITCOIN = 0, Tickets_freeBITCOIN = 0, Winnings_freeDOGECOIN = 0, Winnings_freeNEM = 0;
 
 while (true) {
-    if (checkForInattention())	break;
+    if (checkForInattention())
+        break;
 
 	try {
 		while (true) {
@@ -374,9 +372,8 @@ while (true) {
 							}
 						}
 
-						if (window.content.document.getElementsByClassName('cc_banner cc_container cc_container--open').length) {
+						if (window.content.document.getElementsByClassName('cc_banner cc_container cc_container--open').length)
 							iimPlayCode('SET !ERRORIGNORE YES\nSET !TIMEOUT_STEP 1\nTAG POS=1 TYPE=A ATTR=TXT:Got<SP>it!');
-						}
 
 						iimDisplay('Determining type of captcha...');
 						log('freebitco.in', 'Определяем тип капчи на странице...');
@@ -387,9 +384,8 @@ while (true) {
 							log('freebitco.in', 'Двойная captchas.net обнаружена. Попытаемся ее решить...');
 
 							let str = (window.content.document.getElementById("switch_captchas_button").onclick + ' ').split('\'')[1].split('\'')[0];
-							if (str === 'double_captchas') {
+							if (str === 'double_captchas')
 								iimPlayCode('SET !ERRORIGNORE YES\nSET !TIMEOUT_STEP 10\nEVENT TYPE=CLICK SELECTOR=\'#switch_captchas_button\' BUTTON=0\nWAIT SECONDS=2.5');
-							}
 				
 							let captchasNet = window.content.document.getElementsByClassName('captchasnet_captcha_content');
 							for (let i = 1; i <= captchasNet.length; i++) {
@@ -591,9 +587,8 @@ while (true) {
 						iimPlayCode('SET !ERRORIGNORE YES\nSET !TIMEOUT_STEP 10\nTAG POS=1 TYPE=SELECT ATTR=ID:free_play_captcha_types CONTENT=%recaptcha_v2\nWAIT SECONDS=2');
 					}
 	
-					if (window.content.document.getElementsByClassName('cc_banner cc_container cc_container--open').length) {
+					if (window.content.document.getElementsByClassName('cc_banner cc_container cc_container--open').length)
 						iimPlayCode('SET !ERRORIGNORE YES\nSET !TIMEOUT_STEP 1\nTAG POS=1 TYPE=A ATTR=TXT:Got<SP>it!');
-					}
 
                     iimDisplay('reCAPTCHA v2 is detected. Solving...');
 					log('freedoge.co.in', 'reCAPTCHA v2 обнаружена. Попытаемся ее решить...');
@@ -719,9 +714,8 @@ while (true) {
 					}
 
 					let timer = Number(window.content.document.getElementsByClassName('digits')[0].innerHTML * 60) + Number(window.content.document.getElementsByClassName('digits')[1].innerHTML);
-					if (timer > 0) {
+					if (timer > 0)
 						timeTillNextRoll('freenem.com', freeNEM_RandomTimer, timer);
-                    }
 
 					let solvingCaptchaCycles = 1;
 					while (solvingCaptchaCycles <= 5) {
