@@ -1,4 +1,4 @@
-﻿/**
+/**
  *  @description freebitco.in / freedoge.co.in / freenem.com [ MultiCaptchaBot]
  *  @since Wed Apr 11 2018 20:29:02 GMT+0300 (MSK)
  *  @version 5.1.0 (EN)
@@ -283,11 +283,11 @@ while (true) {
 						iimDisplay('Connecting to the https://freebitco.in/...');
 						log('freebitco.in', 'Connecting to the site...');
 						iimPlayCode('SET !TIMEOUT_PAGE 30'
-								+n+ 'TAB CLOSEALLOTHERS'
-								+n+ 'TAB T=1'
-								+n+ 'TAB CLOSE'
-								+n+ 'URL GOTO=https://freebitco.in/?op=home'
-								+n+ 'WAIT SECONDS=8');
+							+n+ 'TAB CLOSEALLOTHERS'
+							+n+ 'TAB T=1'
+							+n+ 'TAB CLOSE'
+							+n+ 'URL GOTO=https://freebitco.in/?op=home'
+							+n+ 'WAIT SECONDS=8');
 						if (!window.content.document.getElementById('free_play_form_button')) {
 							iimDisplay('Cloudflare protection is detected...');
 							log('freebitco.in', 'Cloudflare protection is detected...');
@@ -305,15 +305,15 @@ while (true) {
 					let solvingCaptchaCycles = 1, answer = null;
 					freeBitcoinLabel:
 					while (solvingCaptchaCycles <= 5) {
-					    do {
+					    	do {
 							iimDisplay('Refreshing page...');
 							log('freebitco.in', 'Refreshing page...');
 							iimPlayCode('SET !TIMEOUT_PAGE 60'
-									+n+ 'TAB CLOSEALLOTHERS'
-									+n+ 'TAB T=1'
-									+n+ 'TAB CLOSE'
-									+n+ 'URL GOTO=https://freebitco.in/?op=home'
-									+n+ 'WAIT SECONDS=8');
+								+n+ 'TAB CLOSEALLOTHERS'
+								+n+ 'TAB T=1'
+								+n+ 'TAB CLOSE'
+								+n+ 'URL GOTO=https://freebitco.in/?op=home'
+								+n+ 'WAIT SECONDS=8');
 							if (!window.content.document.getElementById('free_play_form_button')) {
 								iimDisplay('Cloudflare protection is detected...');
 								log('freebitco.in', 'Cloudflare protection is detected...');
@@ -321,13 +321,13 @@ while (true) {
 								continue;
 							}
 							break;
-						} while (!window.content.document.getElementById('free_play_form_button'));
-
-                        if (/^(\d+)m:(\d+)s/.exec(window.content.document.getElementsByTagName('title')[0].innerText)) {
-                            iimDisplay('There was an exception...');
-                            log('freebitco.in', 'There was an exception...');
-                            break;
-                        }
+					   	} while (!window.content.document.getElementById('free_play_form_button'));
+	
+						if (/^(\d+)m:(\d+)s/.exec(window.content.document.getElementsByTagName('title')[0].innerText)) {
+							iimDisplay('There was an exception...');
+                            				log('freebitco.in', 'There was an exception...');
+                            				break;
+                        			}
 	
 						if (freeBITCOIN_RewardPoints === 'ON') {
 							let accountRewardPoints = Number(window.content.document.getElementsByClassName('user_reward_points')[0].innerHTML.replace(',', ''));
@@ -407,10 +407,10 @@ while (true) {
 								}
 
 								iimPlayCode('SET !ERRORIGNORE YES'
-										+n+ 'SET !TIMEOUT_STEP 10'
-                                        +n+ 'WAIT SECONDS=2.5'
-										+n+ 'TAG POS=' + i + ' TYPE=INPUT:TEXT ATTR=CLASS:captchasnet_captcha_input_box CONTENT=\"' + answer['hash'] + '\"'
-										+n+ 'FILEDELETE NAME=' + captchaPath + captchaName);
+									+n+ 'SET !TIMEOUT_STEP 10'
+                                       					+n+ 'WAIT SECONDS=2.5'
+									+n+ 'TAG POS=' + i + ' TYPE=INPUT:TEXT ATTR=CLASS:captchasnet_captcha_input_box CONTENT=\"' + answer['hash'] + '\"'
+									+n+ 'FILEDELETE NAME=' + captchaPath + captchaName);
 							}
 						} else {
 							if (window.content.document.getElementById('g-recaptcha-response')) {
@@ -419,10 +419,10 @@ while (true) {
 
 								window.content.document.getElementById('g-recaptcha-response').style.display = '';
 								iimPlayCode('SET !ERRORIGNORE YES'
-										+n+ 'SET !TIMEOUT_STEP 10'
-										+n+ 'FRAME F=1'
-										+n+ 'TAG POS=1 TYPE=DIV ATTR=ROLE:presentation&&CLASS:recaptcha-checkbox-checkmark&&TXT:'
-										+n+ 'WAIT SECONDS=8');
+									+n+ 'SET !TIMEOUT_STEP 10'
+									+n+ 'FRAME F=1'
+									+n+ 'TAG POS=1 TYPE=DIV ATTR=ROLE:presentation&&CLASS:recaptcha-checkbox-checkmark&&TXT:'
+									+n+ 'WAIT SECONDS=8');
 
 								if (!window.content.document.getElementById('g-recaptcha-response').value.length) {
 									let data_sitekey = window.content.document.getElementsByClassName('g-recaptcha')[0].getAttribute('data-sitekey');
@@ -458,10 +458,10 @@ while (true) {
 									}
 
 									iimPlayCode('SET !ERRORIGNORE YES'
-											+n+ 'SET !TIMEOUT_STEP 10'
-											+n+ 'WAIT SECONDS=2.5'
-											+n+ 'TAG POS=' + i + ' TYPE=INPUT:TEXT ATTR=CLASS:captchasnet_captcha_input_box CONTENT=\"' + answer['hash'] + '\"'
-											+n+ 'FILEDELETE NAME=' + captchaPath + captchaName);
+										+n+ 'SET !TIMEOUT_STEP 10'
+										+n+ 'WAIT SECONDS=2.5'
+										+n+ 'TAG POS=' + i + ' TYPE=INPUT:TEXT ATTR=CLASS:captchasnet_captcha_input_box CONTENT=\"' + answer['hash'] + '\"'
+										+n+ 'FILEDELETE NAME=' + captchaPath + captchaName);
 								}
 							} else if (window.content.document.getElementById('adcopy-puzzle-image')) {
 								iimDisplay('Solvemedia is detected. Solving...');
@@ -470,11 +470,11 @@ while (true) {
 								let solveMedia = window.content.document.getElementById('adcopy-puzzle-image');
 								let captchaName = makeUniqueName();
 								iimPlayCode('SET !ERRORIGNORE YES'
-										+n+ 'SET !TIMEOUT_STEP 10'
-										+n+ 'TAG POS=1 TYPE=IMG ATTR=SRC:https://api-secure.solvemedia.com/media/reload-whV2.gif'
-										+n+ 'WAIT SECONDS=10'
-										+n+ 'ONDOWNLOAD FOLDER=' + captchaPath + ' FILE=' + captchaName + ' WAIT=YES'
-										+n+ 'TAG POS=1 TYPE=DIV ATTR=ID:adcopy-puzzle-image CONTENT=EVENT:SAVE_ELEMENT_SCREENSHOT');
+									+n+ 'SET !TIMEOUT_STEP 10'
+									+n+ 'TAG POS=1 TYPE=IMG ATTR=SRC:https://api-secure.solvemedia.com/media/reload-whV2.gif'
+									+n+ 'WAIT SECONDS=10'
+									+n+ 'ONDOWNLOAD FOLDER=' + captchaPath + ' FILE=' + captchaName + ' WAIT=YES'
+									+n+ 'TAG POS=1 TYPE=DIV ATTR=ID:adcopy-puzzle-image CONTENT=EVENT:SAVE_ELEMENT_SCREENSHOT');
 								
 								answer = solveTextCaptcha_ruCaptcha('freebitco.in', captchaName, 0, 0, 'NO');
 								if (!answer['status']) {
@@ -486,12 +486,12 @@ while (true) {
 									continue;
 								}
 
-                                iimPlayCode('SET !ERRORIGNORE YES'
-                                        +n+ 'SET !TIMEOUT_PAGE 30'
-										+n+ 'SET !TIMEOUT_STEP 10'
-										+n+ 'WAIT SECONDS=2.5'
-										+n+ 'TAG POS=1 TYPE=INPUT:TEXT ATTR=ID:adcopy_response CONTENT=\"' + answer['hash']  + '\"'
-										+n+ 'FILEDELETE NAME=' + captchaPath + captchaName);
+                                				iimPlayCode('SET !ERRORIGNORE YES'
+                                       					+n+ 'SET !TIMEOUT_PAGE 30'
+									+n+ 'SET !TIMEOUT_STEP 10'
+									+n+ 'WAIT SECONDS=2.5'
+									+n+ 'TAG POS=1 TYPE=INPUT:TEXT ATTR=ID:adcopy_response CONTENT=\"' + answer['hash']  + '\"'
+									+n+ 'FILEDELETE NAME=' + captchaPath + captchaName);
 							}
 						}
 
@@ -534,41 +534,41 @@ while (true) {
 
 			// https://freedoge.co.in/ - - - - - >
 			if (freeDOGECOIN === 'ON') {
-                do {
-                    iimDisplay('Connecting to the https://freedoge.co.in/...');
-                    log('freedoge.co.in', 'Connecting to the site...');
-                    iimPlayCode('SET !TIMEOUT_PAGE 30'
-                            +n+ 'TAB CLOSEALLOTHERS'
-                            +n+ 'TAB T=1'
-                            +n+ 'TAB CLOSE'
-                            +n+ 'URL GOTO=https://freedoge.co.in/'
-                            +n+ 'WAIT SECONDS=8');
+                		do {
+                    			iimDisplay('Connecting to the https://freedoge.co.in/...');
+                    			log('freedoge.co.in', 'Connecting to the site...');
+                    			iimPlayCode('SET !TIMEOUT_PAGE 30'
+                           			+n+ 'TAB CLOSEALLOTHERS'
+                            			+n+ 'TAB T=1'
+                            			+n+ 'TAB CLOSE'
+                            			+n+ 'URL GOTO=https://freedoge.co.in/'
+                            			+n+ 'WAIT SECONDS=8');
 
-                    if (!window.content.document.getElementById('free_play_form_button')) {
-                        iimDisplay('Cloudflare protection is detected...');
-                        log('freedoge.co.in', 'Cloudflare protection is detected...');
-                        iimPlayCode('WAIT SECONDS=20');
-                        continue;
-                    }
-                    break;
-                } while (!window.content.document.getElementById('free_play_form_button'));
+                    			if (!window.content.document.getElementById('free_play_form_button')) {
+                        			iimDisplay('Cloudflare protection is detected...');
+                        			log('freedoge.co.in', 'Cloudflare protection is detected...');
+                        			iimPlayCode('WAIT SECONDS=20');
+                        			continue;
+                    			}
+                    			break;
+                		} while (!window.content.document.getElementById('free_play_form_button'));
 
-                if (/^(\d+)m:(\d+)s/.exec(window.content.document.getElementsByTagName('title')[0].innerText)) {
-                    let timer = Number(/^(\d+)m:(\d+)s/.exec(window.content.document.getElementsByTagName('title')[0].innerText)[1]) * 60 + Number(/^(\d+)m:(\d+)s/.exec(window.content.document.getElementsByTagName('title')[0].innerText)[2]);
-                    timeTillNextRoll('freedoge.co.in', freeDOGECOIN_RandomTimer, timer);
-                }
+                		if (/^(\d+)m:(\d+)s/.exec(window.content.document.getElementsByTagName('title')[0].innerText)) {
+                    			let timer = Number(/^(\d+)m:(\d+)s/.exec(window.content.document.getElementsByTagName('title')[0].innerText)[1]) * 60 + Number(/^(\d+)m:(\d+)s/.exec(window.content.document.getElementsByTagName('title')[0].innerText)[2]);
+                    			timeTillNextRoll('freedoge.co.in', freeDOGECOIN_RandomTimer, timer);
+                		}
                 
-                let solvingCaptchaCycles = 1, answer = null;
-                while (solvingCaptchaCycles <= 5) {
+                		let solvingCaptchaCycles = 1, answer = null;
+                		while (solvingCaptchaCycles <= 5) {
 					do {
 						iimDisplay('Refreshing page...');
 						log('freedoge.co.in', 'Refreshing page...');
 						iimPlayCode('SET !TIMEOUT_PAGE 60'
-								+n+ 'TAB CLOSEALLOTHERS'
-								+n+ 'TAB T=1'
-								+n+ 'TAB CLOSE'
-								+n+ 'URL GOTO=https://freedoge.co.in/'
-								+n+ 'WAIT SECONDS=8');
+							+n+ 'TAB CLOSEALLOTHERS'
+							+n+ 'TAB T=1'
+							+n+ 'TAB CLOSE'
+							+n+ 'URL GOTO=https://freedoge.co.in/'
+							+n+ 'WAIT SECONDS=8');
 						if (!window.content.document.getElementById('free_play_form_button')) {
 							iimDisplay('Cloudflare protection is detected...');
 							log('freedoge.co.in', 'Cloudflare protection is detected...');
@@ -578,10 +578,10 @@ while (true) {
 						break;
 					} while (!window.content.document.getElementById('free_play_form_button'));
 
-                    if (/^(\d+)m:(\d+)s/.exec(window.content.document.getElementsByTagName('title')[0].innerText)) {
-                        iimDisplay('There was an exception...');
-                        log('freedoge.co.in', 'There was an exception...');
-                        break;
+                    			if (/^(\d+)m:(\d+)s/.exec(window.content.document.getElementsByTagName('title')[0].innerText)) {
+                        			iimDisplay('There was an exception...');
+                        			log('freedoge.co.in', 'There was an exception...');
+                        			break;
 					}
 					
 					if (window.content.document.getElementById('free_play_captcha_types').value === 'solvemedia') {
@@ -593,16 +593,16 @@ while (true) {
 					if (window.content.document.getElementsByClassName('cc_banner cc_container cc_container--open').length)
 						iimPlayCode('SET !ERRORIGNORE YES\nSET !TIMEOUT_STEP 1\nTAG POS=1 TYPE=A ATTR=TXT:Got<SP>it!');
 
-                    iimDisplay('reCAPTCHA v2 is detected. Solving...');
+                    			iimDisplay('reCAPTCHA v2 is detected. Solving...');
 					log('freedoge.co.in', 'reCAPTCHA v2 is detected. Solving...');
-                    window.scrollBy(0, 20000);
+                   			window.scrollBy(0, 20000);
                         
 					window.content.document.getElementById('g-recaptcha-response').style.display = '';
 					iimPlayCode('SET !ERRORIGNORE YES'
-							+n+ 'SET !TIMEOUT_STEP 10'
-							+n+ 'FRAME F=1'
-							+n+ 'TAG POS=1 TYPE=DIV ATTR=ROLE:presentation&&CLASS:recaptcha-checkbox-checkmark&&TXT:'
-							+n+ 'WAIT SECONDS=8');
+						+n+ 'SET !TIMEOUT_STEP 10'
+						+n+ 'FRAME F=1'
+						+n+ 'TAG POS=1 TYPE=DIV ATTR=ROLE:presentation&&CLASS:recaptcha-checkbox-checkmark&&TXT:'
+						+n+ 'WAIT SECONDS=8');
 
 					if (!window.content.document.getElementById('g-recaptcha-response').value.length) {
 						let data_sitekey = window.content.document.getElementsByClassName('g-recaptcha')[0].getAttribute('data-sitekey');
@@ -661,26 +661,26 @@ while (true) {
 						iimDisplay('Connecting to the https://freenem.com/...');
 						log('freenem.com', 'Connecting to the site...');
 						iimPlayCode('SET !TIMEOUT_PAGE 60'
-								+n+ 'TAB T=1'
-								+n+ 'TAB CLOSEALLOTHERS'
-								+n+ 'URL GOTO=https://freenem.com/free'
-								+n+ 'WAIT SECONDS=8');
+							+n+ 'TAB T=1'
+							+n+ 'TAB CLOSEALLOTHERS'
+							+n+ 'URL GOTO=https://freenem.com/free'
+							+n+ 'WAIT SECONDS=8');
 
 						if (!window.content.document.getElementsByClassName('main-button-2 roll-button').length) {
 							iimDisplay('Logging to the https://freenem.com/...');
 							log('freenem.com', 'Logging to the site...');
 							iimPlayCode('SET !ERRORIGNORE YES'
-									+n+ 'SET !TIMEOUT_PAGE 30'
-									+n+ 'SET !TIMEOUT_STEP 10'
-									+n+ 'TAG POS=1 TYPE=INPUT:EMAIL ATTR=NAME:email CONTENT=' + freeNEM_Login
-									+n+ 'SET !ENCRYPTION NO'
-									+n+ 'TAG POS=1 TYPE=INPUT:PASSWORD ATTR=NAME:password CONTENT=' + freeNEM_Password
-									+n+ 'TAG POS=1 TYPE=BUTTON ATTR=TXT:LOGIN!'
-									+n+ 'WAIT SECONDS=8');
+								+n+ 'SET !TIMEOUT_PAGE 30'
+								+n+ 'SET !TIMEOUT_STEP 10'
+								+n+ 'TAG POS=1 TYPE=INPUT:EMAIL ATTR=NAME:email CONTENT=' + freeNEM_Login
+								+n+ 'SET !ENCRYPTION NO'
+								+n+ 'TAG POS=1 TYPE=INPUT:PASSWORD ATTR=NAME:password CONTENT=' + freeNEM_Password
+								+n+ 'TAG POS=1 TYPE=BUTTON ATTR=TXT:LOGIN!'
+								+n+ 'WAIT SECONDS=8');
 							
 							if (!window.content.document.getElementsByClassName('main-button-2 roll-button').length) {
-                                iimDisplay('Invisible reCAPTCHA v2 is detected. Solving...');
-                                log('freenem.com', 'Invisible reCAPTCHA v2 is detected. Solving...');
+                                				iimDisplay('Invisible reCAPTCHA v2 is detected. Solving...');
+                                				log('freenem.com', 'Invisible reCAPTCHA v2 is detected. Solving...');
 
 								let data_sitekey = window.content.document.getElementsByTagName('iframe')[0].src.split('?k=')[1].split('&co=')[0];
 								let answer = solveReCaptcha_ruCaptcha(data_sitekey, 'freenem.com', 1);
@@ -694,22 +694,22 @@ while (true) {
 								}
 
 								iimPlayCode('SET !ERRORIGNORE YES'
-										+n+ 'SET !TIMEOUT_PAGE 30'
-										+n+ 'SET !TIMEOUT_STEP 10'
-										+n+ 'TAG POS=1 TYPE=TEXTAREA FORM=ID:* ATTR=ID:g-recaptcha-response CONTENT=\"' + answer['hash'] + '\"'
-										+n+ 'WAIT SECONDS=8');
+									+n+ 'SET !TIMEOUT_PAGE 30'
+									+n+ 'SET !TIMEOUT_STEP 10'
+									+n+ 'TAG POS=1 TYPE=TEXTAREA FORM=ID:* ATTR=ID:g-recaptcha-response CONTENT=\"' + answer['hash'] + '\"'
+									+n+ 'WAIT SECONDS=8');
 
 								 if (!window.content.document.getElementsByClassName('main-button-2 roll-button').length) {
-										iimDisplay('Captcha was solved incorrectly. Sending a report and trying to solve captcha again...');
-										log('freenem.com', 'Captcha was solved incorrectly. Sending a report and trying to solve captcha again...');
-										reportCaptcha(answer['server'], answer['taskId']);
+									iimDisplay('Captcha was solved incorrectly. Sending a report and trying to solve captcha again...');
+									log('freenem.com', 'Captcha was solved incorrectly. Sending a report and trying to solve captcha again...');
+									reportCaptcha(answer['server'], answer['taskId']);
 										
-										if (authorizationCycles == 5) {
-											notificationsBadCaptcha('freenem.com');
-											break freeNemBody;
-										}
-										authorizationCycles++;
-										continue;
+									if (authorizationCycles == 5) {
+										notificationsBadCaptcha('freenem.com');
+										break freeNemBody;
+									}
+									authorizationCycles++;
+									continue;
 								}
 								iimDisplay('Successful authorization...');
 								log('freenem.com', 'Successful authorization...');
@@ -728,36 +728,36 @@ while (true) {
 						iimDisplay('Refreshing page and solving Invisible reCAPTCHA v2...');
 						log('freenem.com', 'Refreshing page and solving Invisible reCAPTCHA v2...');
 						iimPlayCode('SET !ERRORIGNORE YES'
-								+n+ 'SET !TIMEOUT_PAGE 60'
-								+n+ 'SET !TIMEOUT_STEP 10'
-								+n+ 'TAB CLOSEALLOTHERS'
-								+n+ 'TAB T=1'
-								+n+ 'TAB CLOSE'
-								+n+ 'URL GOTO=https://freenem.com/free'
-                                +n+ 'WAIT SECONDS=8');
+							+n+ 'SET !TIMEOUT_PAGE 60'
+							+n+ 'SET !TIMEOUT_STEP 10'
+							+n+ 'TAB CLOSEALLOTHERS'
+							+n+ 'TAB T=1'
+							+n+ 'TAB CLOSE'
+							+n+ 'URL GOTO=https://freenem.com/free'
+                                			+n+ 'WAIT SECONDS=8');
                                 
-                        timer = Number(window.content.document.getElementsByClassName('digits')[0].innerHTML * 60) + Number(window.content.document.getElementsByClassName('digits')[1].innerHTML);
-                        if (timer > 0) {
+                        			timer = Number(window.content.document.getElementsByClassName('digits')[0].innerHTML * 60) + Number(window.content.document.getElementsByClassName('digits')[1].innerHTML);
+                        			if (timer > 0) {
 							iimDisplay('There was an exception...');
 							log('freenem.com', 'There was an exception...');
-                            break freeNemBody;
-                        }
+                            				break freeNemBody;
+                        			}
 
-                        iimPlayCode('SET !ERRORIGNORE YES'
-                                +n+ 'SET !TIMEOUT_PAGE 60'
-                                +n+ 'SET !TIMEOUT_STEP 10'
-                                +n+ 'TAG POS=1 TYPE=BUTTON ATTR=TXT:ROLL!'
-                                +n+ 'WAIT SECONDS=8');
+                        			iimPlayCode('SET !ERRORIGNORE YES'
+                                			+n+ 'SET !TIMEOUT_PAGE 60'
+                                			+n+ 'SET !TIMEOUT_STEP 10'
+                                			+n+ 'TAG POS=1 TYPE=BUTTON ATTR=TXT:ROLL!'
+                                			+n+ 'WAIT SECONDS=8');
 
 						let winningDuringLastSession = Number(window.content.document.getElementsByClassName('result')[0].innerHTML.split(' ')[3]);
 						if (!isNaN(winningDuringLastSession) || (winningDuringLastSession > 0)) {
-                            iimDisplay('Claiming NEM...'); log('freenem.com', 'Claiming NEM...');
-                            iimDisplay('Successfully claimed!'); log('freenem.com', 'Successfully claimed! Collected: ' + winningDuringLastSession.toFixed(8) + ' NEM');
+                            				iimDisplay('Claiming NEM...'); log('freenem.com', 'Claiming NEM...');
+                            				iimDisplay('Successfully claimed!'); log('freenem.com', 'Successfully claimed! Collected: ' + winningDuringLastSession.toFixed(8) + ' NEM');
 							Winnings_freeNEM += winningDuringLastSession;
 							break;
 						} else {
-                            iimDisplay('Invisible reCAPTCHA v2 is detected. Solving...');
-                            log('freenem.com', 'Invisible reCAPTCHA v2 is detected. Solving...');
+                            				iimDisplay('Invisible reCAPTCHA v2 is detected. Solving...');
+                            				log('freenem.com', 'Invisible reCAPTCHA v2 is detected. Solving...');
 
 							let data_sitekey = window.content.document.getElementsByTagName('iframe')[0].src.split('?k=')[1].split('&co=')[0];
 							let answer = solveReCaptcha_ruCaptcha(data_sitekey, 'freenem.com', 1);
@@ -773,12 +773,12 @@ while (true) {
 							iimDisplay('Claiming NEM...');
 							log('freenem.com', 'Claiming NEM...');
 							iimPlayCode('SET !ERRORIGNORE YES'
-									+n+ 'SET !TIMEOUT_PAGE 30'
-									+n+ 'SET !TIMEOUT_STEP 10'
-									+n+ 'WAIT SECONDS=2.5'
-									+n+ 'TAG POS=1 TYPE=TEXTAREA FORM=ID:* ATTR=ID:g-recaptcha-response CONTENT=\"' + answer['hash'] + '\"'
-									+n+ 'ONDIALOG POS=1 BUTTON=OK CONTENT='
-									+n+ 'WAIT SECONDS=8');
+								+n+ 'SET !TIMEOUT_PAGE 30'
+								+n+ 'SET !TIMEOUT_STEP 10'
+								+n+ 'WAIT SECONDS=2.5'
+								+n+ 'TAG POS=1 TYPE=TEXTAREA FORM=ID:* ATTR=ID:g-recaptcha-response CONTENT=\"' + answer['hash'] + '\"'
+								+n+ 'ONDIALOG POS=1 BUTTON=OK CONTENT='
+								+n+ 'WAIT SECONDS=8');
 								
 							winningDuringLastSession = Number(window.content.document.getElementsByClassName('result')[0].innerHTML.split(' ')[3]);
 							if (!isNaN(winningDuringLastSession) || (winningDuringLastSession > 0)) {
@@ -805,7 +805,7 @@ while (true) {
 		}
 	}
 	catch (e) {
-        iimDisplay('There was an error in the bot operation, check the connection to the Internet! The bot will be restarted in 30 seconds...');
+        	iimDisplay('There was an error in the bot operation, check the connection to the Internet! The bot will be restarted in 30 seconds...');
 	 	log('RESTART', 'There was an error in the bot operation, check the connection to the Internet! The bot will be restarted in 30 seconds...');
 	}
 }
