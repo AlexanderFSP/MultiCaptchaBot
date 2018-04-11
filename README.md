@@ -18,7 +18,11 @@ To get the extended version you will need to register on the sites using the ref
 ## :computer:Demo (YouTube) ##
 [![Video demonstration about bot working on YouTube](https://static.wixstatic.com/media/ab398e_9df0e13a56c742f48e5a09f939e63d75~mv2.png)](https://www.youtube.com/watch?v=NxiYBPajKlE)
 ## :scroll:Install ##
-:ru:*Instructions in Russian*: https://multicaptchabot.wixsite.com/multicaptchabot/instruction
+*Instructions in Russian*: https://multicaptchabot.wixsite.com/multicaptchabot/instruction
+
+:uk:Donwload `MCB_v510(EN).js`: https://yadi.sk/d/RBlHiweM3ULGjE<br />
+:ru:Donwload `MCB_v510(RU).js`: https://yadi.sk/d/uLEGBYcp3ULGjL
+
 ### Step 1: ###
 Download and install `Mozilla Firefox` **v47.0 - v49.0**.<br />*Download links for Windows*:<br />
 **47.0**: https://filehippo.com/download_firefox/68389/<br />
