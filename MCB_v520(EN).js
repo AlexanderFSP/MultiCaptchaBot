@@ -1,7 +1,7 @@
 /**
  *  @description freebitco.in / freedoge.co.in / freenem.com [ MultiCaptchaBot]
- *  @since Wed Apr 11 2018 20:29:02 GMT+0300 (MSK)
- *  @version 5.1.0 (EN)
+ *  @since Sat May 19 2018 23:05:19 GMT+0300 (MSK)
+ *  @version 5.2.0 (EN)
  *  @tutorial https://multicaptchabot.wixsite.com/multicaptchabot/instruction
  *  @author AlexanderFSP <https://github.com/AlexanderFSP>
  *
@@ -328,30 +328,27 @@ while (true) {
                             				log('freebitco.in', 'There was an exception...');
                             				break;
                         			}
-	
+
 						if (freeBITCOIN_RewardPoints === 'ON') {
 							let accountRewardPoints = Number(window.content.document.getElementsByClassName('user_reward_points')[0].innerHTML.replace(',', ''));
-							if (!window.content.document.getElementById('bonus_container_free_points')) {
-								if (accountRewardPoints < 12) { }
-								else if ((accountRewardPoints >= 12 ) && (accountRewardPoints < 120)) {
+							
+							if (!window.content.document.getElementById('bonus_container_free_points') && (accountRewardPoints >= 12)) {
+								if (accountRewardPoints < 120) {
 									iimDisplay('Activating 1 REWARD POINTS / ROLL...');
 									log('freebitco.in', 'Activating \'1 REWARD POINTS / ROLL\'');
 									iimPlayCode('SET !ERRORIGNORE YES\nSET !TIMEOUT_STEP 10\nTAG POS=1 TYPE=BUTTON ATTR=ONCLICK:RedeemRPProduct(\'free_points_1\')\nWAIT SECONDS=1');
 									accountRewardPoints -= 12;
-								}
-								else if ((accountRewardPoints >= 120) && (accountRewardPoints < 600)) {
+								} else if ((accountRewardPoints >= 120) && (accountRewardPoints < 600)) {
 									iimDisplay('Activating 10 REWARD POINTS / ROLL...');
 									log('freebitco.in', 'Activating \'10 REWARD POINTS / ROLL\'');
 									iimPlayCode('SET !ERRORIGNORE YES\nSET !TIMEOUT_STEP 10\nTAG POS=1 TYPE=BUTTON ATTR=ONCLICK:RedeemRPProduct(\'free_points_10\')\nWAIT SECONDS=1');
 									accountRewardPoints -= 120;
-								}
-								else if ((accountRewardPoints >= 600) && (accountRewardPoints < 1200)) {
+								} else if ((accountRewardPoints >= 600) && (accountRewardPoints < 1200)) {
 									iimDisplay('Activating 50 REWARD POINTS / ROLL...');
 									log('freebitco.in', 'Activating \'50 REWARD POINTS / ROLL\'');
 									iimPlayCode('SET !ERRORIGNORE YES\nSET !TIMEOUT_STEP 10\nTAG POS=1 TYPE=BUTTON ATTR=ONCLICK:RedeemRPProduct(\'free_points_50\')\nWAIT SECONDS=1');
 									accountRewardPoints -= 600;
-								}
-								else {
+								} else {
 									iimDisplay('Activating 100 REWARD POINTS / ROLL...');
 									log('freebitco.in', 'Activating \'100 REWARD POINTS / ROLL\'');
 									iimPlayCode('SET !ERRORIGNORE YES\nSET !TIMEOUT_STEP 10\nTAG POS=1 TYPE=BUTTON ATTR=ONCLICK:RedeemRPProduct(\'free_points_100\')\nWAIT SECONDS=1');
@@ -359,15 +356,12 @@ while (true) {
 								}
 							}
 	
-							if (!window.content.document.getElementById('bonus_container_fp_bonus')) {
-								if (accountRewardPoints < 2800) { }
-								else if ((accountRewardPoints >= 2800) && (accountRewardPoints < 4400)) {
+							if (!window.content.document.getElementById('bonus_container_fp_bonus') && (accountRewardPoints >= 2800)) {
+								if (accountRewardPoints < 4400) {
 									iimDisplay('Activating 500% FREE BTC BONUS...');
 									log('freebitco.in', 'Activating \'500% FREE BTC BONUS\'');
 									iimPlayCode('SET !ERRORIGNORE YES\nSET !TIMEOUT_STEP 10\nTAG POS=1 TYPE=BUTTON ATTR=ONCLICK:RedeemRPProduct(\'fp_bonus_500\')\nWAIT SECONDS=1');
-								}
-								else
-								{
+								} else {
 									iimDisplay('Activating 1000% FREE BTC BONUS...');
 									log('freebitco.in', 'Activating \'1000% FREE BTC BONUS\'');
 									iimPlayCode('SET !ERRORIGNORE YES\nSET !TIMEOUT_STEP 10\nTAG POS=1 TYPE=BUTTON ATTR=ONCLICK:RedeemRPProduct(\'fp_bonus_1000\')\nWAIT SECONDS=1');
@@ -375,21 +369,49 @@ while (true) {
 							}
 						}
 
-						if (window.content.document.getElementsByClassName('cc_banner cc_container cc_container--open').length)
+						if (window.content.document.getElementsByClassName('cc_banner cc_container cc_container--open').length) {
 							iimPlayCode('SET !ERRORIGNORE YES\nSET !TIMEOUT_STEP 1\nTAG POS=1 TYPE=A ATTR=TXT:Got<SP>it!');
+						}
 
 						iimDisplay('Determining type of captcha...');
 						log('freebitco.in', 'Determining type of captcha...');
 						window.scrollBy(0, 20000);
 
-						if (window.content.document.getElementById('switch_captchas_button')) {
-							iimDisplay('\'SWITCH CAPTCHA BUTTON\' is detected. Choosing double captchas.net. Solving...');
-							log('freebitco.in', 'Double captchas.net is detected. Solving...');
+                        // [ Sat May 19 2018 23:10:21 GMT+0300 (MSK) ]
+						if (window.content.document.getElementById('switch_captchas_button') && ((window.content.document.getElementById('switch_captchas_button').onclick + ' ').split('\'')[1].split('\'')[0] === 'recaptcha')) {
+							iimDisplay('\'SWITCH CAPTCHA BUTTON\' is detected. Choosing reCAPTCHA v2...');
+							log('freebitco.in', '\'SWITCH CAPTCHA BUTTON\' is detected. Choosing reCAPTCHA v2...');
+                            iimPlayCode('SET !ERRORIGNORE YES\nSET !TIMEOUT_STEP 10\nTAG POS=1 TYPE=DIV ATTR=TXT:SWITCH<SP>CAPTCHA\nWAIT SECONDS=2.5');
+						}
+						
+						if (window.content.document.getElementById('g-recaptcha-response')) {
+							iimDisplay('reCAPTCHA v2 is detected. Solving...');
+							log('freebitco.in', 'reCAPTCHA v2 is detected. Solving...');
 
-							let str = (window.content.document.getElementById("switch_captchas_button").onclick + ' ').split('\'')[1].split('\'')[0];
-							if (str === 'double_captchas')
-								iimPlayCode('SET !ERRORIGNORE YES\nSET !TIMEOUT_STEP 10\nEVENT TYPE=CLICK SELECTOR=\'#switch_captchas_button\' BUTTON=0\nWAIT SECONDS=2.5');
-				
+							window.content.document.getElementById('g-recaptcha-response').style.display = '';
+							iimPlayCode('SET !ERRORIGNORE YES'
+								+n+ 'SET !TIMEOUT_STEP 10'
+								+n+ 'FRAME F=1'
+								+n+ 'TAG POS=1 TYPE=DIV ATTR=ROLE:presentation&&CLASS:recaptcha-checkbox-checkmark&&TXT:'
+								+n+ 'WAIT SECONDS=8');
+
+							if (!window.content.document.getElementById('g-recaptcha-response').value.length) {
+								let data_sitekey = window.content.document.getElementsByClassName('g-recaptcha')[0].getAttribute('data-sitekey');
+								answer = solveReCaptcha_ruCaptcha(data_sitekey, 'freebitco.in', 0);
+								if (!answer['status']) {
+									if (solvingCaptchaCycles == 5) {
+										notificationsBadCaptcha('freebitco.in');
+										break;
+									}
+									solvingCaptchaCycles++;
+									continue;
+								}
+								iimPlayCode('SET !ERRORIGNORE YES\nSET !TIMEOUT_STEP 10\nWAIT SECONDS=2.5\nTAG POS=1 TYPE=TEXTAREA FORM=ID:* ATTR=ID:g-recaptcha-response CONTENT=\"' + answer['hash'] + '\"');
+							}
+						} else if (window.content.document.getElementsByClassName('captchasnet_captcha_content').length) {
+							iimDisplay('Captchas.net / Freebitco.in custom captcha is detected. Solving...');
+							log('freebitco.in', 'Captchas.net is detected. Solving...');
+							
 							let captchasNet = window.content.document.getElementsByClassName('captchasnet_captcha_content');
 							for (let i = 1; i <= captchasNet.length; i++) {
 								let regsense = (i == 1) ? 'NO' : 'YES';
@@ -408,91 +430,39 @@ while (true) {
 
 								iimPlayCode('SET !ERRORIGNORE YES'
 									+n+ 'SET !TIMEOUT_STEP 10'
-                                       					+n+ 'WAIT SECONDS=2.5'
+									+n+ 'WAIT SECONDS=2.5'
 									+n+ 'TAG POS=' + i + ' TYPE=INPUT:TEXT ATTR=CLASS:captchasnet_captcha_input_box CONTENT=\"' + answer['hash'] + '\"'
 									+n+ 'FILEDELETE NAME=' + captchaPath + captchaName);
 							}
-						} else {
-							if (window.content.document.getElementById('g-recaptcha-response')) {
-								iimDisplay('reCAPTCHA v2 is detected. Solving...');
-								log('freebitco.in', 'reCAPTCHA v2 is detected. Solving...');
+						} else if (window.content.document.getElementById('adcopy-puzzle-image')) {
+							iimDisplay('Solvemedia is detected. Solving...');
+							log('freebitco.in', 'Solvemedia is detected. Solving...');
 
-								window.content.document.getElementById('g-recaptcha-response').style.display = '';
-								iimPlayCode('SET !ERRORIGNORE YES'
-									+n+ 'SET !TIMEOUT_STEP 10'
-									+n+ 'FRAME F=1'
-									+n+ 'TAG POS=1 TYPE=DIV ATTR=ROLE:presentation&&CLASS:recaptcha-checkbox-checkmark&&TXT:'
-									+n+ 'WAIT SECONDS=8');
-
-								if (!window.content.document.getElementById('g-recaptcha-response').value.length) {
-									let data_sitekey = window.content.document.getElementsByClassName('g-recaptcha')[0].getAttribute('data-sitekey');
-									answer = solveReCaptcha_ruCaptcha(data_sitekey, 'freebitco.in', 0);
-									if (!answer['status']) {
-										if (solvingCaptchaCycles == 5) {
-											notificationsBadCaptcha('freebitco.in');
-											break;
-										}
-										solvingCaptchaCycles++;
-										continue;
-									}
-									iimPlayCode('SET !ERRORIGNORE YES\nSET !TIMEOUT_STEP 10\nWAIT SECONDS=2.5\nTAG POS=1 TYPE=TEXTAREA FORM=ID:* ATTR=ID:g-recaptcha-response CONTENT=\"' + answer['hash'] + '\"');
+							let solveMedia = window.content.document.getElementById('adcopy-puzzle-image');
+							let captchaName = makeUniqueName();
+							iimPlayCode('SET !ERRORIGNORE YES'
+								+n+ 'SET !TIMEOUT_STEP 10'
+								+n+ 'TAG POS=1 TYPE=IMG ATTR=SRC:https://api-secure.solvemedia.com/media/reload-whV2.gif'
+								+n+ 'WAIT SECONDS=10'
+								+n+ 'ONDOWNLOAD FOLDER=' + captchaPath + ' FILE=' + captchaName + ' WAIT=YES'
+								+n+ 'TAG POS=1 TYPE=DIV ATTR=ID:adcopy-puzzle-image CONTENT=EVENT:SAVE_ELEMENT_SCREENSHOT');
+							
+							answer = solveTextCaptcha_ruCaptcha('freebitco.in', captchaName, 0, 0, 'NO');
+							if (!answer['status']) {
+								if (solvingCaptchaCycles == 5) {
+									notificationsBadCaptcha('freebitco.in');
+									break;
 								}
-							} else if (window.content.document.getElementsByClassName('captchasnet_captcha_content').length) {
-								iimDisplay('Captchas.net / Freebitco.in custom captcha is detected. Solving...');
-								log('freebitco.in', 'Captchas.net is detected. Solving...');
-								
-								let captchasNet = window.content.document.getElementsByClassName('captchasnet_captcha_content');
-								for (let i = 1; i <= captchasNet.length; i++) {
-									let regsense = (i == 1) ? 'NO' : 'YES';
-									let captchaName = makeUniqueName();
-									iimPlayCode('SET !ERRORIGNORE YES\nSET !TIMEOUT_STEP 10\nONDOWNLOAD FOLDER=' + captchaPath + ' FILE=' + captchaName + ' WAIT=YES\nTAG POS=' + i + ' TYPE=DIV ATTR=CLASS:captchasnet_captcha_content CONTENT=EVENT:SAVE_ELEMENT_SCREENSHOT');
-									
-									answer = solveTextCaptcha_ruCaptcha('freebitco.in', captchaName, 6, 6, regsense);
-									if (!answer['status']) {
-										if (solvingCaptchaCycles == 5) {
-											notificationsBadCaptcha('freebitco.in');
-											break freeBitcoinBody;
-										}
-										solvingCaptchaCycles++;
-										continue freeBitcoinLabel;
-									}
-
-									iimPlayCode('SET !ERRORIGNORE YES'
-										+n+ 'SET !TIMEOUT_STEP 10'
-										+n+ 'WAIT SECONDS=2.5'
-										+n+ 'TAG POS=' + i + ' TYPE=INPUT:TEXT ATTR=CLASS:captchasnet_captcha_input_box CONTENT=\"' + answer['hash'] + '\"'
-										+n+ 'FILEDELETE NAME=' + captchaPath + captchaName);
-								}
-							} else if (window.content.document.getElementById('adcopy-puzzle-image')) {
-								iimDisplay('Solvemedia is detected. Solving...');
-								log('freebitco.in', 'Solvemedia is detected. Solving...');
-
-								let solveMedia = window.content.document.getElementById('adcopy-puzzle-image');
-								let captchaName = makeUniqueName();
-								iimPlayCode('SET !ERRORIGNORE YES'
-									+n+ 'SET !TIMEOUT_STEP 10'
-									+n+ 'TAG POS=1 TYPE=IMG ATTR=SRC:https://api-secure.solvemedia.com/media/reload-whV2.gif'
-									+n+ 'WAIT SECONDS=10'
-									+n+ 'ONDOWNLOAD FOLDER=' + captchaPath + ' FILE=' + captchaName + ' WAIT=YES'
-									+n+ 'TAG POS=1 TYPE=DIV ATTR=ID:adcopy-puzzle-image CONTENT=EVENT:SAVE_ELEMENT_SCREENSHOT');
-								
-								answer = solveTextCaptcha_ruCaptcha('freebitco.in', captchaName, 0, 0, 'NO');
-								if (!answer['status']) {
-									if (solvingCaptchaCycles == 5) {
-										notificationsBadCaptcha('freebitco.in');
-										break;
-									}
-									solvingCaptchaCycles++;
-									continue;
-								}
-
-                                				iimPlayCode('SET !ERRORIGNORE YES'
-                                       					+n+ 'SET !TIMEOUT_PAGE 30'
-									+n+ 'SET !TIMEOUT_STEP 10'
-									+n+ 'WAIT SECONDS=2.5'
-									+n+ 'TAG POS=1 TYPE=INPUT:TEXT ATTR=ID:adcopy_response CONTENT=\"' + answer['hash']  + '\"'
-									+n+ 'FILEDELETE NAME=' + captchaPath + captchaName);
+								solvingCaptchaCycles++;
+								continue;
 							}
+
+											iimPlayCode('SET !ERRORIGNORE YES'
+													+n+ 'SET !TIMEOUT_PAGE 30'
+								+n+ 'SET !TIMEOUT_STEP 10'
+								+n+ 'WAIT SECONDS=2.5'
+								+n+ 'TAG POS=1 TYPE=INPUT:TEXT ATTR=ID:adcopy_response CONTENT=\"' + answer['hash']  + '\"'
+								+n+ 'FILEDELETE NAME=' + captchaPath + captchaName);
 						}
 
 						iimDisplay('Claiming satoshis...');

@@ -20,8 +20,8 @@ To get the extended version you will need to register on the sites using the ref
 ## :scroll:Install ##
 *Instructions in Russian*: https://multicaptchabot.wixsite.com/multicaptchabot/instruction
 
-:uk:Donwload `MCB_v510(EN).js`: https://yadi.sk/d/RBlHiweM3ULGjE<br />
-:ru:Donwload `MCB_v510(RU).js`: https://yadi.sk/d/uLEGBYcp3ULGjL
+:uk:Donwload `MCB_v520(EN).js`: https://yadi.sk/d/RBlHiweM3ULGjE<br />
+:ru:Donwload `MCB_v520(RU).js`: https://yadi.sk/d/uLEGBYcp3ULGjL
 
 ### Step 1: ###
 Download and install `Mozilla Firefox` **v47.0 - v49.0**.<br />*Download links for Windows*:<br />
