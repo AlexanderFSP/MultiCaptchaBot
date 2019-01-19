@@ -57,8 +57,14 @@ const freeNEM_RandomTimer      = 'OFF';	           // [ON / OFF] - Random delay 
 function solveReCaptcha_ruCaptcha(data_sitekey, pageurl, invisble) {
 	var serverURL = 'http://discount.rucaptcha.com/';
 	while (true) {
-		iimPlayCode('SET !TIMEOUT_PAGE 60\nTAB OPEN\nTAB T=2\nURL GOTO=' + serverURL + 'in.php?key=' + apiKey + '&method=userrecaptcha&googlekey=' + data_sitekey + '&pageurl=' + pageurl + '&invisible=' + invisble + '&json=1&soft_id=2004');
-		var answer = JSON.parse(window.content.document.getElementsByTagName('pre')[0].firstChild.data);
+        iimPlayCode('SET !TIMEOUT_PAGE 60\nTAB OPEN\nTAB T=2\nURL GOTO=' + serverURL + 'in.php?key=' + apiKey + '&method=userrecaptcha&googlekey=' + data_sitekey + '&pageurl=' + pageurl + '&invisible=' + invisble + '&json=1&soft_id=2004');
+        var answer = "";
+        if (window.content.document.getElementsByTagName('pre').length == 0) {
+            answer = JSON.parse(window.content.document.getElementsByTagName('plaintext')[0].firstChild.data);
+        }
+        else {
+            answer = JSON.parse(window.content.document.getElementsByTagName('pre')[0].firstChild.data);
+        }        
 		if (!answer['status']) {
 			if (answer['request'] === 'ERROR_NO_SLOT_AVAILABLE') {
                 		iimDisplay('[ ' + serverURL + ' ]: Error! Trying to solve again...');
@@ -80,8 +86,13 @@ function solveReCaptcha_ruCaptcha(data_sitekey, pageurl, invisble) {
 
 	var numberOfIterations = 1;
 	while (numberOfIterations <= 30) {
-		iimPlayCode('SET !TIMEOUT_PAGE 60\nURL GOTO=' + serverURL + 'res.php?key=' + apiKey + '&action=get&id=' + taskId + '&json=1');
-		answer = JSON.parse(window.content.document.getElementsByTagName('pre')[0].firstChild.data);
+        iimPlayCode('SET !TIMEOUT_PAGE 60\nURL GOTO=' + serverURL + 'res.php?key=' + apiKey + '&action=get&id=' + taskId + '&json=1');
+        if (window.content.document.getElementsByTagName('pre').length == 0) {
+            answer = JSON.parse(window.content.document.getElementsByTagName('plaintext')[0].firstChild.data);
+        }
+        else {
+            answer = JSON.parse(window.content.document.getElementsByTagName('pre')[0].firstChild.data);
+        }
 		if (answer['status']) {
 			iimPlayCode('SET !TIMEOUT_PAGE 30\nTAB CLOSE')
 			break;
