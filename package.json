@@ -1,0 +1,41 @@
+{
+  "name": "multicaptchabot",
+  "version": "1.0.0",
+  "description": "The best bot for collecting cryptocurrency from freebitco.in, freedoge.co.in and freenem.com 🚀🌔",
+  "main": "MCB_v520(EN).js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexanderFSP/MultiCaptchaBot.git"
+  },
+  "keywords": [
+    "javascript",
+    "bot",
+    "bitcoin",
+    "dom",
+    "captcha",
+    "mozilla",
+    "cryptocurrency",
+    "free-software",
+    "captcha-image",
+    "imacros",
+    "mozilla-firefox",
+    "nem",
+    "mozilla-firefox-addon",
+    "dogecoin",
+    "captcha-solver",
+    "freebitcoin",
+    "freedogecoin",
+    "recaptchav2",
+    "captcha-services-for-recaptcha-v2",
+    "freenem"
+  ],
+  "author": "AlexanderFSP",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlexanderFSP/MultiCaptchaBot/issues"
+  },
+  "homepage": "https://github.com/AlexanderFSP/MultiCaptchaBot#readme"
+}
